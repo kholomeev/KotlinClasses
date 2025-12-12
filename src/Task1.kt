@@ -1,50 +1,91 @@
 fun main() {
-    val d1 = Point(1,1)
-    val d2 = Point(-4,2)
-    val d3 = Point(0,4)
+    println("Точка и треугольник")
 
-    val tri = Triangle(d1, d2, d3)
-    val dp = Point(0, 3)
+    try {
+        print("Введите координату X точки 1: ")
+        var x: Int = readln().toInt()
+        print("Введите координату Y точки 1: ")
+        var y: Int = readln().toInt()
+        val d1 = Point(x,y)
 
-    isTheDotInTriangle(tri, dp)
+        println()
+
+        print("Введите координату X точки 2: ")
+        x = readln().toInt()
+        print("Введите координату Y точки 2: ")
+        y = readln().toInt()
+        val d2 = Point(x,y)
+
+        println()
+
+        print("Введите координату X точки 3: ")
+        x = readln().toInt()
+        print("Введите координату Y точки 3: ")
+        y = readln().toInt()
+        val d3 = Point(x,y)
+
+        val tri = Triangle(d1, d2, d3)
+        tri.triangleInfo()
+
+        print("Введите координату X данной точки: ")
+        x = readln().toInt()
+        print("Введите координату Y данной точки: ")
+        y = readln().toInt()
+        val dp = Point(x, y)
+
+        println()
+
+        println("Проверка нахождения точки в треугольнике...")
+        isTheDotInTriangle(tri, dp)
+    }
+    catch (e: NumberFormatException) {
+        println("Обнаружено значение, не являющееся числом.")
+    }
+
 }
 
 fun isTheDotInTriangle(triangle: Triangle, dPoint: Point) {
     // Вычисление векторов
-    val zeroA = Vector(dPoint, triangle.dot1)  // (1, 1) - (0, 3) = (1, -2)
-    zeroA.VectorCords()
-    val zeroB = Vector(dPoint, triangle.dot2)  // (-4, 2) - (0, 3) = (-4, -1)
-    zeroB.VectorCords()
-    val zeroC = Vector(dPoint, triangle.dot3)  // (0, 4) - (0, 3) = (0, 1)
-    zeroC.VectorCords()
+    /// (1, 1) - (0, 3) = (1, -2)
+    val OA_x = triangle.dot1.x - dPoint.x
+    val OA_y = triangle.dot1.y - dPoint.y
+    /// (-4, 2) - (0, 3) = (-4, -1)
+    val OB_x = triangle.dot2.x - dPoint.x
+    val OB_y = triangle.dot2.y - dPoint.y
+    /// (0, 4) - (0, 3) = (0, 1)
+    val OC_x = triangle.dot3.x - dPoint.x
+    val OC_y = triangle.dot3.y - dPoint.y
+
     // Векторные произведения
+    /// 0A * OB = 1 * (-1) - (-4) * (-2) = -1 - 8 = -9
+    /// [  i   j ]
+    /// [  1  -2 ]
+    /// [ -4  -1 ]
+    val vectMul1 = OA_x * OB_y - OB_x * OA_y
 
-    // 0A * OB = 1 * (-1) - (-4) * (-2) = -1 - 8 = -9
-    // [  i   j ]
-    // [  1  -2 ]
-    // [ -4  -1 ]
+    /// 0B * 0C = (-4) * 1 + 0 * (-1) = -4
+    /// [  i   j ]
+    /// [ -4  -1 ]
+    /// [  0   1 ]
+    val vectMul2 = OB_x * OC_y - OC_x * OB_y
 
-    // 0B * 0C = (-4) * 1 + 0 * (-1) = -4
-    // [  i   j ]
-    // [ -4  -1 ]
-    // [  0   1 ]
-
-    // 0C * 0A = 0 * (-2) - 1 * 1 = 0 - 1 = -1
-    // [  i   j ]
-    // [  0   1 ]
-    // [  1  -2 ]
-
-    val vectMul1 = zeroA.begin * zeroA.end + zeroB.begin * zeroB.end
-    val vectMul2 = zeroB.begin * zeroB.end + zeroC.begin * zeroC.end
-    val vectMul3 = zeroC.begin * zeroC.end + zeroA.begin * zeroA.end
+    /// 0C * 0A = 0 * (-2) - 1 * 1 = 0 - 1 = -1
+    /// [  i   j ]
+    /// [  0   1 ]
+    /// [  1  -2 ]
+    val vectMul3 = OC_x * OA_y - OA_x * OC_y
 
     // Проверка (если результаты всех произведений будут иметь одинаковые знаки (все больше/меньше нуля, то точка в треугольнике)
     if (vectMul1 > 0 && vectMul2 > 0 && vectMul3 > 0) {
-
+        println("Точка находится внутри треугольника")
     }
     else if (vectMul1 < 0 && vectMul2 < 0 && vectMul3 < 0) {
-
-    } else if (vectMul1 == 0 || vectMul2 == 0 || vectMul3 == 0) {
-
+        println("Точка находится внутри треугольника")
+    }
+    else if (vectMul1 == 0 || vectMul2 == 0 || vectMul3 == 0) {
+        println("Точка находится на одной из сторон треугольника")
+    }
+    else {
+        println("Точка находится вне треугольника")
     }
 }

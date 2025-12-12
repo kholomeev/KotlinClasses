@@ -1,6 +1,4 @@
-class Point(x: Int, y: Int) {
-    var x = x
-    var y = y
+class Point(var x: Int, var y: Int) {
 }
 
 // Точка и треугольник (создать класс Точка и класс Треугольник)
