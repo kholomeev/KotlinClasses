@@ -1,6 +1,4 @@
-fun main() {
-    println("Точка и треугольник")
-
+fun task1() {
     try {
         print("Введите координату X точки 1: ")
         var x = readln().toDouble()
