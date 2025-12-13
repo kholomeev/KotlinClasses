@@ -3,34 +3,34 @@ fun main() {
 
     try {
         print("Введите координату X точки 1: ")
-        var x: Int = readln().toInt()
+        var x = readln().toDouble()
         print("Введите координату Y точки 1: ")
-        var y: Int = readln().toInt()
-        val d1 = Point(x,y)
+        var y = readln().toDouble()
+        val d1 = Point(x, y)
 
         println()
 
         print("Введите координату X точки 2: ")
-        x = readln().toInt()
+        x = readln().toDouble()
         print("Введите координату Y точки 2: ")
-        y = readln().toInt()
-        val d2 = Point(x,y)
+        y = readln().toDouble()
+        val d2 = Point(x, y)
 
         println()
 
         print("Введите координату X точки 3: ")
-        x = readln().toInt()
+        x = readln().toDouble()
         print("Введите координату Y точки 3: ")
-        y = readln().toInt()
-        val d3 = Point(x,y)
+        y = readln().toDouble()
+        val d3 = Point(x, y)
 
         val tri = Triangle(d1, d2, d3)
         tri.triangleInfo()
 
         print("Введите координату X данной точки: ")
-        x = readln().toInt()
+        x = readln().toDouble()
         print("Введите координату Y данной точки: ")
-        y = readln().toInt()
+        y = readln().toDouble()
         val dp = Point(x, y)
 
         println()
@@ -40,6 +40,7 @@ fun main() {
     }
     catch (e: NumberFormatException) {
         println("Обнаружено значение, не являющееся числом.")
+        println(e.message)
     }
 
 }
@@ -82,7 +83,7 @@ fun isTheDotInTriangle(triangle: Triangle, dPoint: Point) {
     else if (vectMul1 < 0 && vectMul2 < 0 && vectMul3 < 0) {
         println("Точка находится внутри треугольника")
     }
-    else if (vectMul1 == 0 || vectMul2 == 0 || vectMul3 == 0) {
+    else if (vectMul1 == 0.0 || vectMul2 == 0.0 || vectMul3 == 0.0) {
         println("Точка находится на одной из сторон треугольника")
     }
     else {

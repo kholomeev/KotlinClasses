@@ -7,5 +7,4 @@ class Triangle(var dot1: Point, var dot2: Point, var dot3: Point) {
         println("Точка 3: ${dot3.x}, ${dot3.y}")
         println()
     }
-
 }
