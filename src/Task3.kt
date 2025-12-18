@@ -1,13 +1,31 @@
 import java.lang.NumberFormatException
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 fun task3() {
+    println("Количество точек должно быть более, чем 2.")
     print("Введите количество точек: ")
 
-    try {
-        val pointCount = readln().trim().toInt()
+    val pointCount: Int
 
-        val listPoint: MutableList<Point> = mutableListOf()
-        for (i in 1..pointCount) {
+    try {
+        pointCount = readln().trim().toInt()
+        if (pointCount <= 2) {
+            println("Количество точек должно быть более, чем 2.")
+            return
+        }
+    }
+    catch (e: NumberFormatException) {
+        println("Обнаружено значение, не являющееся числом.")
+        println(e.message)
+        return
+    }
+
+    val listPoint: MutableList<Point> = mutableListOf()
+    val listDistance: MutableList<Double> = mutableListOf()
+
+    for (i in 1..pointCount) {
+        try {
             print("Введите координату X точки $i: ")
             val x = readln().toDouble()
             print("Введите координату Y точки $i: ")
@@ -15,18 +33,25 @@ fun task3() {
 
             val dot = Point(x, y)
             listPoint.add(dot)
-        }
 
-        for (dot in listPoint) {
-            println("Точка: ${dot.pointInfo()}")
+            println()
+        } catch (e: NumberFormatException) {
+            println("Обнаружено значение, не являющееся числом.")
+            println(e.message)
+            return
         }
     }
-    catch (e: NumberFormatException) {
-        println("Было введено не ")
+    println()
+
+    for (i in 1 until pointCount) {
+        val x = (listPoint[i].x - listPoint[0].x).pow(2)
+        val y = (listPoint[i].y - listPoint[0].y).pow(2)
+        val distance = sqrt(x + y)
+        listDistance.add(distance)
+        println("Расстояние между ${listPoint[0].pointInfo()} и ${listPoint[i].pointInfo()} равно $distance")
     }
+    println()
+
+    println("Минимальное расстояние между точками: ${listDistance.min()}")
+    println("Максимальное расстояние между точками: ${listDistance.max()}")
 }
-
-// Выбор наибольшего и наименьшего расстояний (обязательно использовать класс Точка)
-// Множество точек расположено на координатной плоскости.
-// Количество точек задается в консоли при запуске программы и оно должно быть больше двух. Каждая точка задается своими координатами.
-// Точки не совпадают друг с другом. Требуется найти минимальное и максимальное расстояние между точками.

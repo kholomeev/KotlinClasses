@@ -1,10 +1,20 @@
 fun task1() {
+    val tri: Triangle
+    val d1: Point
+    val d2: Point
+    val d3: Point
+
+    var dp: Point
+
+    var x: Double
+    var y: Double
+
     try {
         print("Введите координату X точки 1: ")
-        var x = readln().toDouble()
+        x = readln().toDouble()
         print("Введите координату Y точки 1: ")
-        var y = readln().toDouble()
-        val d1 = Point(x, y)
+        y = readln().toDouble()
+        d1 = Point(x, y)
 
         println()
 
@@ -12,7 +22,7 @@ fun task1() {
         x = readln().toDouble()
         print("Введите координату Y точки 2: ")
         y = readln().toDouble()
-        val d2 = Point(x, y)
+        d2 = Point(x, y)
 
         println()
 
@@ -20,40 +30,48 @@ fun task1() {
         x = readln().toDouble()
         print("Введите координату Y точки 3: ")
         y = readln().toDouble()
-        val d3 = Point(x, y)
-
-        val tri = Triangle(d1, d2, d3)
-        tri.triangleInfo()
-
-        print("Введите координату X данной точки: ")
-        x = readln().toDouble()
-        print("Введите координату Y данной точки: ")
-        y = readln().toDouble()
-        val dp = Point(x, y)
-
-        println()
-
-        println("Проверка нахождения точки в треугольнике...")
-        isTheDotInTriangle(tri, dp)
+        d3 = Point(x, y)
     }
     catch (e: NumberFormatException) {
         println("Обнаружено значение, не являющееся числом.")
         println(e.message)
+        return
     }
+
+    tri = Triangle(d1, d2, d3)
+    tri.triangleInfo()
+
+    try {
+        print("Введите координату X данной точки: ")
+        x = readln().toDouble()
+        print("Введите координату Y данной точки: ")
+        y = readln().toDouble()
+        dp = Point(x, y)
+    }
+    catch (e: NumberFormatException) {
+        println("Обнаружено значение, не являющееся числом.")
+        println(e.message)
+        return
+    }
+
+    println()
+
+    println("Проверка нахождения точки в треугольнике...")
+    isTheDotInTriangle(tri, dp)
 
 }
 
-fun isTheDotInTriangle(triangle: Triangle, dPoint: Point) {
+fun isTheDotInTriangle(triangle: Triangle, desiredPoint: Point) {
     // Вычисление векторов
     /// (1, 1) - (0, 3) = (1, -2)
-    val OA_x = triangle.dot1.x - dPoint.x
-    val OA_y = triangle.dot1.y - dPoint.y
+    val OA_x = triangle.dot1.x - desiredPoint.x
+    val OA_y = triangle.dot1.y - desiredPoint.y
     /// (-4, 2) - (0, 3) = (-4, -1)
-    val OB_x = triangle.dot2.x - dPoint.x
-    val OB_y = triangle.dot2.y - dPoint.y
+    val OB_x = triangle.dot2.x - desiredPoint.x
+    val OB_y = triangle.dot2.y - desiredPoint.y
     /// (0, 4) - (0, 3) = (0, 1)
-    val OC_x = triangle.dot3.x - dPoint.x
-    val OC_y = triangle.dot3.y - dPoint.y
+    val OC_x = triangle.dot3.x - desiredPoint.x
+    val OC_y = triangle.dot3.y - desiredPoint.y
 
     // Векторные произведения
     /// 0A * OB = 1 * (-1) - (-4) * (-2) = -1 - 8 = -9
